@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  catalogdb:
+    image: mongo
+    restart: always
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+  
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
+
+volumes:
+  mongo_data: 
