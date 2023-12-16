@@ -39,7 +39,9 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "api/swagger";
     });
 }
+app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthentication();
 app.UseStaticFiles();
 app.UseAuthorization();
 

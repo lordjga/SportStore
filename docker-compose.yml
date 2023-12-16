@@ -1,6 +1,10 @@
 version: '3.4'
 
 services:
+  portainer:
+    image: portainer/portainer-ce
+    restart: always
+
   catalogdb:
     image: mongo
     restart: always
@@ -9,12 +13,28 @@ services:
     image: mongo-express
     restart: always
   
+  basketdb:
+    image: redis:alpine
+    restart: always
+
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
 
 volumes:
   mongo_data: 
+  portainer_data:
+  redis_data:
+  redis-config:
+  
+networks:
+  redis-network:
+    driver: bridge
