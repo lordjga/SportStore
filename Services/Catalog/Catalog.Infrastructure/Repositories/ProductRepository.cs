@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories
 {
-    public class ProductRepository : GrudRepository<Product>, IProductRepository
+    public class ProductRepository : CrudRepository<Product>, IProductRepository
     {
         public ProductRepository(ICatalogContext catalogContext): base(catalogContext)
         {

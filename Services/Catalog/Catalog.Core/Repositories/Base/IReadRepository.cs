@@ -2,7 +2,7 @@
 
 namespace Catalog.Core.Repositories.Base
 {
-    public interface IRepository<TEntity> : IDisposable where TEntity : BaseEntity
+    public interface IReadRepository<TEntity> : IDisposable where TEntity : BaseEntity
     {
         Task<IEnumerable<TEntity>> GetAll();
 

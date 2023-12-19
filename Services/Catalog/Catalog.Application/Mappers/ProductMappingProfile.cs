@@ -14,6 +14,7 @@ namespace Catalog.Application.Mappers
             CreateMap<Product, ProductViewModel>().ReverseMap();
             CreateMap<ProductType, ProductTypeViewModel>().ReverseMap();
             CreateMap<Product, CreateProductCommand>().ReverseMap();
+            CreateMap<Product, UpdateProductCommand>().ReverseMap();
             CreateMap<Pagination<Product>, Pagination<ProductViewModel>>().ReverseMap();
         }
     }

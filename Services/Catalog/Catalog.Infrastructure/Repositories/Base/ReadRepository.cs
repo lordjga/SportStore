@@ -5,12 +5,12 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories.Base
 {
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public abstract class ReadRepository<TEntity> : IReadRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly ICatalogContext _catalogContext;
         protected IMongoCollection<TEntity> collection;
 
-        public BaseRepository(ICatalogContext catalogContext)
+        public ReadRepository(ICatalogContext catalogContext)
         {
             _catalogContext = catalogContext;
             collection = _catalogContext.GetCollection<TEntity>(typeof(TEntity).Name);

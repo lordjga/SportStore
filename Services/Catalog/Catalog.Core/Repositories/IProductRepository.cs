@@ -4,7 +4,7 @@ using Catalog.Core.Specifications;
 
 namespace Catalog.Core.Repositories
 {
-    public interface IProductRepository : IGrudRepository<Product>
+    public interface IProductRepository : ICrudRepository<Product>
     {
         Task<Pagination<Product>> GetProductsWithFilter(CatalogSpecsParams catalogSpecsParams);
 

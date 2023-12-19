@@ -5,7 +5,7 @@ using Catalog.Infrastructure.Repositories.Base;
 
 namespace Catalog.Infrastructure.Repositories
 {
-    public class BrandRepository : BaseRepository<ProductBrand>, IBrandRepository
+    public class BrandRepository : ReadRepository<ProductBrand>, IBrandRepository
     {
         public BrandRepository(ICatalogContext catalogContext) : base(catalogContext)
         {

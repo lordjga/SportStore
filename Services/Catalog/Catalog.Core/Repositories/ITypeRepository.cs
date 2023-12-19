@@ -3,7 +3,7 @@ using Catalog.Core.Repositories.Base;
 
 namespace Catalog.Core.Repositories
 {
-    public interface ITypeRepository : IRepository<ProductType>
+    public interface ITypeRepository : IReadRepository<ProductType>
     {
     }
 }
