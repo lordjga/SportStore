@@ -89,6 +89,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__CacheConnection=basketdb:6379"
+      - "GrpcSettings__DiscountUrl=http://discount.api"
       - ASPNETCORE_HTTP_PORTS=80
     ports:
       - "9001:80"
