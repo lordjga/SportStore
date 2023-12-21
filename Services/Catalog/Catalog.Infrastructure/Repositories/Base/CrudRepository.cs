@@ -5,9 +5,9 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories.Base
 {
-    public abstract class GrudRepository<TEntity> : BaseRepository<TEntity>, IGrudRepository<TEntity> where TEntity : BaseEntity
+    public abstract class CrudRepository<TEntity> : ReadRepository<TEntity>, ICrudRepository<TEntity> where TEntity : BaseEntity
     {
-        protected GrudRepository(ICatalogContext catalogContext) : base(catalogContext)
+        protected CrudRepository(ICatalogContext catalogContext) : base(catalogContext)
         {
         }
 

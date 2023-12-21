@@ -41,23 +41,39 @@ services:
       - redis-config:/usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
-    # networks:
-    #   - redis-network
 
   redis-commander:
-    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
     environment:
       - REDIS_HOSTS=local:basketdb:6379
-      # - HTTP_USER=root
-      # - HTTP_PASSWORD=qwerty
     ports:
       - 8082:8081
-    # networks:
-    #   - redis-network
     depends_on:
       - basketdb
 
+  discountdb:
+    container_name: discountdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=DiscountDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@eShopping.net #host for server creating: discountdb -> inspect -> NetworkSettings -> Networks -> sportstore_default -> IPAddress
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
   catalog.api:
+    container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__DefaultConnection=mongodb://root:example@catalogdb:27017"
@@ -69,11 +85,24 @@ services:
       - catalogdb
 
   basket.api:
+    container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__CacheConnection=basketdb:6379"
+      - "GrpcSettings__DiscountUrl=http://discount.api"
       - ASPNETCORE_HTTP_PORTS=80
     ports:
       - "9001:80"
     depends_on:
       - basketdb
+
+  discount.api:
+    container_name: discount.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__DefaultConnection=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;"
+      - ASPNETCORE_HTTP_PORTS=80          
+    depends_on:
+      - discountdb
+    ports:
+      - "9002:80"

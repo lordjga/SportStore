@@ -1,4 +1,5 @@
 using Catalog.Application.Commands;
+using Catalog.Application.Mappers;
 using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using MediatR;
@@ -15,17 +16,13 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
     }
     public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var productEntity = await _productRepository.Update(new Product
+        var productEntity = ProductMapper.Mapper.Map<Product>(request);
+        if (productEntity is null)
         {
-            Id = request.Id,
-            Description = request.Description,
-            ImageFile = request.ImageFile,
-            Name = request.Name,
-            Price = request.Price,
-            Summary = request.Summary,
-            Brands = request.Brands,
-            Types = request.Types
-        });
-        return productEntity;
+            throw new ApplicationException("There is an issue with mapping while updating  new product");
+        }
+
+        var result = await _productRepository.Update(productEntity);
+        return result;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Catalog.Core.Repositories.Base
 {
-    public interface IGrudRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public interface ICrudRepository<TEntity> : IReadRepository<TEntity> where TEntity : BaseEntity
     {
         Task<TEntity> Create(TEntity entity);
 
